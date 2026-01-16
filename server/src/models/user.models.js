@@ -37,10 +37,15 @@ const userSchema = new Schema(
   { timestamps: true }
 );
 
-userSchema.pre("save", async function () {
-  if (!this.isModified("password")) return;
+userSchema.pre("save", async function (next) {
+  if (!this.isModified("password")) return next();
 
-  this.password = await bcrypt.hash(this.password, SALT_ROUNDS);
+  try {
+    this.password = await bcrypt.hash(this.password, SALT_ROUNDS);
+    next(); // <--- THIS MUST BE CALLED
+  } catch (error) {
+    next(error); // <--- PASS ERROR TO GLOBAL HANDLER
+  }
 });
 
 userSchema.methods.isPasswordCorrect = async function (password) {
@@ -62,7 +67,7 @@ userSchema.methods.generateAccessToken = function () {
 userSchema.methods.generateRefreshToken = function () {
   const payload = { id: this._id };
   return jwt.sign(payload, process.env.REFRESH_TOKEN_SECRET, {
-    expiresIn: process.env.REFRESH_TOKEN_EXPIRY,
+    expiresIn: process.env.REFRESH_TOKEN_EXPIRY || "7d",
   });
 };
 
