@@ -37,16 +37,12 @@ const userSchema = new Schema(
   { timestamps: true }
 );
 
-userSchema.pre("save", async function (next) {
-  if (!this.isModified("password")) return next();
+userSchema.pre("save", async function () {
+  if (!this.isModified("password")) return;
 
-  try {
-    this.password = await bcrypt.hash(this.password, SALT_ROUNDS);
-    next(); // <--- THIS MUST BE CALLED
-  } catch (error) {
-    next(error); // <--- PASS ERROR TO GLOBAL HANDLER
-  }
+  this.password = await bcrypt.hash(this.password, SALT_ROUNDS);
 });
+
 
 userSchema.methods.isPasswordCorrect = async function (password) {
   return await bcrypt.compare(password, this.password);
