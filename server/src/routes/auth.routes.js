@@ -1,12 +1,12 @@
 import { Router } from "express";
-import { registerSchema, loginSchema } from "../validators/user.validators.js";
+import { registerSchema, loginSchema } from "../controllers/auth/auth.schema.js";
 import {
   logoutUser,
   registerUser,
   loginUser,
   getCurrentUser,
   refreshAccessToken,
-} from "../controllers/user.controllers.js";
+} from "../controllers/auth/auth.controllers.js";
 import { validate } from "../middlewares/validate.middlwares.js";
 import { authMiddleware } from "../middlewares/auth.middlewares.js";
 

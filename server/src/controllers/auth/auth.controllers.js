@@ -1,7 +1,7 @@
-import { asyncHandler } from "../utils/async-handler.js";
-import { ApiError } from "../utils/api-error.js";
-import { ApiResponse } from "../utils/api-response.js";
-import { UserModel } from "../models/user.models.js";
+import { asyncHandler } from "../../utils/async-handler.js";
+import { ApiError } from "../../utils/api-error.js";
+import { ApiResponse } from "../../utils/api-response.js";
+import { UserModel } from "../../models/user.models.js";
 
 export const refreshAccessToken = asyncHandler(async (req, res) => {
   const refreshTokenFromCookie = req.cookies?.refreshToken;
@@ -86,7 +86,9 @@ const generateAccessAndRefreshToken = async (userId) => {
 export const registerUser = asyncHandler(async (req, res) => {
   const { username, email, password } = req.body;
 
-  const existedUser = await UserModel.findOne({ email });
+  const normalizedEmail = email.toLowerCase().trim();
+
+  const existedUser = await UserModel.findOne({ email: normalizedEmail });
 
   if (existedUser) {
     throw new ApiError(409, "User with email already exists");
@@ -94,7 +96,7 @@ export const registerUser = asyncHandler(async (req, res) => {
 
   const user = await UserModel.create({
     username,
-    email,
+    email:normalizedEmail,
     password,
   });
 
@@ -109,9 +111,6 @@ export const registerUser = asyncHandler(async (req, res) => {
   return res
     .status(201)
     .json(new ApiResponse(201, createdUser, "User registered successfully"));
-
-  // //generate tokens and save refreshtoken on user
-  // const { accessToken, refreshToken } = await generateAccessAndRefreshToken(user._id);
 });
 
 {
@@ -147,13 +146,11 @@ export const loginUser = asyncHandler(async (req, res) => {
     httpOnly: true,
     secure: isProd,
     sameSite: isProd ? "None" : "Lax",
-    //    maxAge: parseExpiryToMs(process.env.ACCESS_TOKEN_EXPIRY || "15m"),
   };
   const cookieOptionsRefresh = {
     httpOnly: true,
     secure: isProd,
     sameSite: isProd ? "None" : "Lax",
-    //    maxAge: parseExpiryToMs(process.env.REFRESH_TOKEN_EXPIRY || "7d"),
   };
   return res
     .status(200)
