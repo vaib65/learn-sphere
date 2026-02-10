@@ -6,7 +6,7 @@ import {
   loginUser,
   getCurrentUser,
   refreshAccessToken,
-} from "../controllers/auth/auth.controllers.js";
+} from "../controllers/auth/auth.controller.js";
 import { validate } from "../middlewares/validate.middlwares.js";
 import { authMiddleware } from "../middlewares/auth.middlewares.js";
 

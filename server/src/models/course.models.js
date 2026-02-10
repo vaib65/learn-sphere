@@ -7,11 +7,14 @@ const courseSchema = new Schema(
       trim: true,
       required: true,
     },
-    description: {
-        type: String,
-        trim:true
+    subTitle: {
+      type: String,
     },
-    thumbnail: {
+    description: {
+      type: String,
+      trim: true,
+    },
+    courseThumbnail: {
       type: String,
     },
     instructorId: {
@@ -21,7 +24,7 @@ const courseSchema = new Schema(
     },
     category: {
       type: String,
-      default: "web development",
+      required: true,
     },
     status: {
       type: String,

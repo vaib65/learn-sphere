@@ -1,15 +1,16 @@
-import { StrictMode } from 'react'
-import { createRoot } from 'react-dom/client'
-import './index.css'
-import App from './App.jsx'
-import { Provider, provider } from "react-redux"
-import { appStore } from './app/store'
+import React from "react";
+import ReactDOM from "react-dom/client";
+import { Provider } from "react-redux";
+import { store } from "./app/store";
 
+const App = () => {
+  return <div>LearnSphere Frontend Bootstrapped 🚀</div>;
+};
 
-createRoot(document.getElementById("root")).render(
-  <StrictMode>
-    <Provider store={appStore}>
+ReactDOM.createRoot(document.getElementById("root")).render(
+  <React.StrictMode>
+    <Provider store={store}>
       <App />
     </Provider>
-  </StrictMode>,
+  </React.StrictMode>,
 );

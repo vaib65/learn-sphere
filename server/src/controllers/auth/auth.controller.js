@@ -2,7 +2,7 @@ import { asyncHandler } from "../../utils/async-handler.js";
 import { ApiError } from "../../utils/api-error.js";
 import { ApiResponse } from "../../utils/api-response.js";
 import { UserModel } from "../../models/user.models.js";
-
+import jwt from "jsonwebtoken"
 export const refreshAccessToken = asyncHandler(async (req, res) => {
   const refreshTokenFromCookie = req.cookies?.refreshToken;
 

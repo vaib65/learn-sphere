@@ -7,7 +7,7 @@ import {
   getPublishedCourses,
   publishCourse,
  
-} from "../controllers/course/courses.controllers.js";
+} from "../controllers/course/courses.controller.js";
 import { courseInputSchema } from "../controllers/course/course.schema";
 import { authorizeRoles } from "../middlewares/role.middlewares.js";
 import { ROLES } from "../constants/role.js";

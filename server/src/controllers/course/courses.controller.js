@@ -1,6 +1,5 @@
 import { asyncHandler } from "../../utils/async-handler.js";
 import { ApiResponse } from "../../utils/api-response.js";
-import { ApiError } from "../../utils/api-error.js";
 import {
   createCourseService,
   getCourseByIdService,
@@ -15,12 +14,11 @@ import {
 export const createCourse = asyncHandler(async (req, res) => {
   const instructorId = req.user._id;
 
-  const { title, description, category } = req.body;
+  const { title, category } = req.body;
 
   const course = await createCourseService(
     {
       title,
-      description,
       category,
     },
     instructorId,

@@ -2,12 +2,11 @@ import { CourseModel } from "../models/course.models.js";
 import { ApiError } from "../utils/api-error.js";
 
 export const createCourseService = async (
-  { title, description, category },
+  { title, category },
   instructorId,
 ) => {
   const course = await CourseModel.create({
     title,
-    description,
     instructorId,
     category,
     status: "draft",

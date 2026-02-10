@@ -21,11 +21,17 @@ import healthCheckRouter from "./routes/healthCheck.routes.js"
 import userRouter from "./routes/auth.routes.js";
 import { errorHandler } from "./middlewares/error.middlewares.js";
 import courseRouter from "./routes/course.routes.js";
+import enrollmentRouter from "./routes/enrollment.routes.js";
+import lectureRouter from "./routes/lecture.routes.js";
+import progressRouter from "./routes/progress.routes.js";
 
 //routes
 app.use("/api/v1/healthcheck", healthCheckRouter)
 app.use("/api/v1/users", userRouter)
-app.use("/api/v1/course",courseRouter)
+app.use("/api/v1/course", courseRouter)
+app.use("/api/v1/enrollment", enrollmentRouter)
+app.use("/api/v1/lectures", lectureRouter)
+app.use("/api/v1/progress",progressRouter)
 
 //global error handler
 app.use(errorHandler)
